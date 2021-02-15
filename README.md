@@ -35,7 +35,7 @@ Levaremos em conta os seguintes critérios:
 
 ## Sobre a entrega
 
-  - O prazo para entrega do projeto é até 23:59 do dia 15/02/2021.
+  - O prazo para entrega do projeto é até 23:59 do dia 19/02/2021.
   - A API pode ser HTTP, Restful, WSDL/SOAP, HATEOAS ou gRCP mas deverá ser documentado no [README.md](.) como executar/compilar/empacotar o projeto e quais os endpoints solicitados nos requisitos acima. 
   - A versão do Java pode ser atualizada para 11 ou 14.
   - Não existe restrição de framework (EE, Spring, Quarkus etc) mas será melhor avaliado se justificado no [README.md](.) os motivos da decisão.
