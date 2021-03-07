@@ -15,7 +15,7 @@
 
 ## Requisitos
 
-  - Existe um exemplo de carga de banco de dados em memória em [ProductDAoExampleTest.java](./src/test/java/br/com/supera/game/store/ProductDAoExampleTest.java)
+  - Existe um exemplo de carga de banco de dados em memória em [ProductDaoExampleTest.java](./src/test/java/br/com/supera/game/store/ProductDaoExampleTest.java)
   - Os valores exibidos no checkout (frete, subtotal e total) devem ser calculados dinamicamente
   - O usuário poderá adicionar e remover produtos do carrinho
   - O usuário poderá ordenar os produtos por preço, popularidade (score) e ordem alfabética.
