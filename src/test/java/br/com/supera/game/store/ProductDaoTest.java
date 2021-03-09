@@ -1,5 +1,6 @@
 package br.com.supera.game.store;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -55,6 +56,28 @@ public class ProductDaoTest{
 		LOGGER.info(pList.get(0).toString());
 		LOGGER.info(pList.get(pList.size()-1).toString());
 					
+    }
+	
+	@Test
+	@DBUnit(allowEmptyFields = true)
+    @DataSet("products.yml") 
+    public void writeTest() {
+		
+		LOGGER.info("Testing WRITE operations");
+		
+		Product p = Product.builder()
+				.withName("TestName")
+				.withPrice(BigDecimal.valueOf(10))
+				.withImage("TestImagePath")
+				.withScore((short) 10)
+				.build();
+		
+		ProductDao productDao = new ProductDao(emProvider);
+		productDao.persistAutoCommit(p);
+		Product p2 = productDao.getByField("name", p.getName());
+		LOGGER.info("Asserting that the inserted product and retrived have the same hashcode");
+		assertEquals(p.hashCode(), p2.hashCode());
+							
     }
 	
 	
