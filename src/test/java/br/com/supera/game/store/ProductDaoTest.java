@@ -80,5 +80,28 @@ public class ProductDaoTest{
 							
     }
 	
-	
+	@Test
+	@DBUnit(allowEmptyFields = true)
+    @DataSet("products.yml") 
+    public void updateTest() {
+		
+		LOGGER.info("Testing UPDATE operations");
+		
+		ProductDao productDao = new ProductDao(emProvider);
+		Product p = productDao.getByField("name", "Call Of Duty WWII");
+		assertNotNull(p);
+		
+		LOGGER.info("Updating price of {} to $45", p.toString());
+		BigDecimal previousP2Value = p.getPrice();
+		p.setPrice(BigDecimal.valueOf(45));
+		
+		productDao.mergeAutoCommit(p);
+		
+		Product p2 = productDao.getByField("name", p.getName());
+		
+		LOGGER.info("Asserting that the inserted product and retrived have the same hashcode");
+		assertNotEquals(previousP2Value, p2.getPrice());
+		assertEquals(p2.getPrice(), BigDecimal.valueOf(45));
+							
+    }
 }
