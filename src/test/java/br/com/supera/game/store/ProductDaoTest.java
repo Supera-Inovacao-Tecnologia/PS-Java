@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -39,23 +40,27 @@ public class ProductDaoTest{
 	@DBUnit(allowEmptyFields = true)
     @DataSet("products.yml") 
     public void readTest() {
-		
-		LOGGER.info("Testing READ operations");
-		
-		Product p = new ProductDao(emProvider).getById(74);
-		assertNotNull(p);
-		
-		Product p2 = new ProductDao(emProvider).getByField("name", "Call Of Duty Infinite Warfare");
-		assertNotNull(p2);
-		
-		List<Product> pList = new ProductDao(emProvider).findAll();
-		assertNotNull(pList);
-		LOGGER.info("Asserting size of the list of Products");
-		assertNotEquals(pList.size(), 0);
-		
-		LOGGER.info("Printing first and last results from the retrieved list of Products");
-		LOGGER.info(pList.get(0).toString());
-		LOGGER.info(pList.get(pList.size()-1).toString());
+		try {
+			LOGGER.info("Testing READ operations");
+			
+			Product p = new ProductDao(emProvider).getById(74);
+			assertNotNull(p);
+			
+			Product p2 = new ProductDao(emProvider).getByField("name", "Call Of Duty Infinite Warfare");
+			assertNotNull(p2);
+			
+			List<Product> pList = new ProductDao(emProvider).findAll();
+			assertNotNull(pList);
+			LOGGER.info("Asserting size of the list of Products");
+			assertNotEquals(pList.size(), 0);
+			
+			LOGGER.info("Printing first and last results from the retrieved list of Products");
+			LOGGER.info(pList.get(0).toString());
+			LOGGER.info(pList.get(pList.size()-1).toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
 					
     }
 	
@@ -63,76 +68,85 @@ public class ProductDaoTest{
 	@DBUnit(allowEmptyFields = true)
     @DataSet("products.yml") 
     public void writeTest() {
-		
-		LOGGER.info("Testing WRITE operations");
-		
-		Product p = Product.builder()
-				.withName("TestName")
-				.withPrice(BigDecimal.valueOf(10))
-				.withImage("TestImagePath")
-				.withScore((short) 10)
-				.build();
-		
-		ProductDao productDao = new ProductDao(emProvider);
-		productDao.persistAutoCommit(p);
-		Product p2 = productDao.getByField("name", p.getName());
-		LOGGER.info("Asserting that the inserted product and retrived have the same hashcode");
-		assertEquals(p.hashCode(), p2.hashCode());
-							
+	try {	
+			LOGGER.info("Testing WRITE operations");
+			
+			Product p = Product.builder()
+					.withName("TestName")
+					.withPrice(BigDecimal.valueOf(10))
+					.withImage("TestImagePath")
+					.withScore((short) 10)
+					.build();
+			
+			ProductDao productDao = new ProductDao(emProvider);
+			productDao.persistAutoCommit(p);
+			Product p2 = productDao.getByField("name", p.getName());
+			LOGGER.info("Asserting that the inserted product and retrived have the same hashcode");
+			assertEquals(p.hashCode(), p2.hashCode());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
     }
 	
 	@Test
 	@DBUnit(allowEmptyFields = true)
     @DataSet("products.yml") 
     public void updateTest() {
-		
-		LOGGER.info("Testing UPDATE operations");
-		
-		ProductDao productDao = new ProductDao(emProvider);
-		Product p = productDao.getByField("name", "Call Of Duty WWII");
-		assertNotNull(p);
-		
-		LOGGER.info("Updating price of {} to $45", p.toString());
-		BigDecimal previousP2Value = p.getPrice();
-		p.setPrice(BigDecimal.valueOf(45));
-		
-		productDao.mergeAutoCommit(p);
-		
-		Product p2 = productDao.getByField("name", p.getName());
-		
-		LOGGER.info("Asserting that the inserted product and retrived have the same hashcode");
-		assertNotEquals(previousP2Value, p2.getPrice());
-		assertEquals(p2.getPrice(), BigDecimal.valueOf(45));
-							
+		try {
+			LOGGER.info("Testing UPDATE operations");
+			
+			ProductDao productDao = new ProductDao(emProvider);
+			Product p = productDao.getByField("name", "Call Of Duty WWII");
+			assertNotNull(p);
+			
+			LOGGER.info("Updating price of {} to $45", p.toString());
+			BigDecimal previousP2Value = p.getPrice();
+			p.setPrice(BigDecimal.valueOf(45));
+			
+			productDao.mergeAutoCommit(p);
+			
+			Product p2 = productDao.getByField("name", p.getName());
+			
+			LOGGER.info("Asserting that the inserted product and retrived have the same hashcode");
+			assertNotEquals(previousP2Value, p2.getPrice());
+			assertEquals(p2.getPrice(), BigDecimal.valueOf(45));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}					
     }
 	
 	@Test
 	@DBUnit(allowEmptyFields = true)
     @DataSet("products.yml") 
     public void deleteTest() {
-		
-		List<Product> pList = new ProductDao(emProvider).findAll();
-		assertNotNull(pList);
-		int productListInitialSize = pList.size();
-		
-		LOGGER.info("Testing UPDATE operations");
-		
-		ProductDao productDao = new ProductDao(emProvider);
-		Product p = productDao.getByField("name", "Call Of Duty WWII");
-		assertNotNull(p);
-		
-		LOGGER.info("Deleting {} ", p.toString());
-		productDao.remove(p);
-		
-		LOGGER.info("Asserting that the deleted product is not in the database anymore");
-		Product p2 = productDao.getByField("name", "Call Of Duty WWII");
-		assertNull(p2);
-
-		LOGGER.info("Asserting that the size of the list of product has decreased");
-		List<Product> pList2 = new ProductDao(emProvider).findAll();
-		int finalSize = pList2.size();
-		assertNotNull(pList2);
-		assertEquals(productListInitialSize-1, finalSize);
-							
+		try {
+			List<Product> pList = new ProductDao(emProvider).findAll();
+			assertNotNull(pList);
+			int productListInitialSize = pList.size();
+			
+			LOGGER.info("Testing UPDATE operations");
+			
+			ProductDao productDao = new ProductDao(emProvider);
+			Product p = productDao.getByField("name", "Call Of Duty WWII");
+			assertNotNull(p);
+			
+			LOGGER.info("Deleting {} ", p.toString());
+			productDao.remove(p);
+			
+			LOGGER.info("Asserting that the deleted product is not in the database anymore");
+			Product p2 = productDao.getByField("name", "Call Of Duty WWII");
+			assertNull(p2);
+	
+			LOGGER.info("Asserting that the size of the list of product has decreased");
+			List<Product> pList2 = new ProductDao(emProvider).findAll();
+			int finalSize = pList2.size();
+			assertNotNull(pList2);
+			assertEquals(productListInitialSize-1, finalSize);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}					
     }
 }
