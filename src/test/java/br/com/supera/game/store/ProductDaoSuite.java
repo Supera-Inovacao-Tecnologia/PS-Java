@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	ProductDaoTeste.class,
+	ProductDaoTest.class,
 //	ProductDaoTestQueryFormatOFF.class
 	})
 public class ProductDaoSuite {
