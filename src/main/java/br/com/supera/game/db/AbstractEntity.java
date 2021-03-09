@@ -12,9 +12,6 @@ public abstract class AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Version
-	private Integer version;
-
 	/* CONSTRUCTORS */
 	public AbstractEntity() {
 		super();
@@ -27,13 +24,5 @@ public abstract class AbstractEntity {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
 	}
 }
