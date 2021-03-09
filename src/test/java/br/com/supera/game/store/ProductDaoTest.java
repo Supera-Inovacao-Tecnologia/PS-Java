@@ -3,6 +3,7 @@ package br.com.supera.game.store;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -102,6 +103,36 @@ public class ProductDaoTest{
 		LOGGER.info("Asserting that the inserted product and retrived have the same hashcode");
 		assertNotEquals(previousP2Value, p2.getPrice());
 		assertEquals(p2.getPrice(), BigDecimal.valueOf(45));
+							
+    }
+	
+	@Test
+	@DBUnit(allowEmptyFields = true)
+    @DataSet("products.yml") 
+    public void deleteTest() {
+		
+		List<Product> pList = new ProductDao(emProvider).findAll();
+		assertNotNull(pList);
+		int productListInitialSize = pList.size();
+		
+		LOGGER.info("Testing UPDATE operations");
+		
+		ProductDao productDao = new ProductDao(emProvider);
+		Product p = productDao.getByField("name", "Call Of Duty WWII");
+		assertNotNull(p);
+		
+		LOGGER.info("Deleting {} ", p.toString());
+		productDao.remove(p);
+		
+		LOGGER.info("Asserting that the deleted product is not in the database anymore");
+		Product p2 = productDao.getByField("name", "Call Of Duty WWII");
+		assertNull(p2);
+
+		LOGGER.info("Asserting that the size of the list of product has decreased");
+		List<Product> pList2 = new ProductDao(emProvider).findAll();
+		int finalSize = pList2.size();
+		assertNotNull(pList2);
+		assertEquals(productListInitialSize-1, finalSize);
 							
     }
 }
