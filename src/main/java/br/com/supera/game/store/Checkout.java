@@ -3,10 +3,15 @@ package br.com.supera.game.store;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
 import br.com.supera.game.db.AbstractEntity;
 
+@Entity
 public class Checkout extends AbstractEntity {
 	
+	@OneToMany
 	private List<Product> productList;
 	private BigDecimal shipingPrice;
 	private BigDecimal subtotalPrice;
@@ -21,9 +26,13 @@ public class Checkout extends AbstractEntity {
 		
 		//Access the up to date cart from the database
 	}
+	
+	public Checkout() {
+		super();
+	}
 
 	/* GETTERS/SETTERS */
-
+	
 	public List<Product> getProductList() {
 		return productList;
 	}
