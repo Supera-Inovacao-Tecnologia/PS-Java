@@ -19,6 +19,9 @@ import com.github.dbunit.rules.DBUnitRule;
 import com.github.dbunit.rules.api.configuration.DBUnit;
 import com.github.dbunit.rules.api.dataset.DataSet;
 import com.github.dbunit.rules.util.EntityManagerProvider;
+import static com.github.dbunit.rules.util.EntityManagerProvider.em;
+
+import br.com.supera.game.db.ProductDao;
 
 public class ProductDaoTest{
 
@@ -43,13 +46,13 @@ public class ProductDaoTest{
 		try {
 			LOGGER.info("Testing READ operations");
 			
-			Product p = new ProductDao(emProvider).getById(74);
+			Product p = new ProductDao(em()).getById(74);
 			assertNotNull(p);
 			
-			Product p2 = new ProductDao(emProvider).getByField("name", "Call Of Duty Infinite Warfare");
+			Product p2 = new ProductDao(em()).getByField("name", "Call Of Duty Infinite Warfare");
 			assertNotNull(p2);
 			
-			List<Product> pList = new ProductDao(emProvider).findAll();
+			List<Product> pList = new ProductDao(em()).getAll();
 			assertNotNull(pList);
 			LOGGER.info("Asserting size of the list of Products");
 			assertNotEquals(pList.size(), 0);
@@ -78,7 +81,7 @@ public class ProductDaoTest{
 					.withScore((short) 10)
 					.build();
 			
-			ProductDao productDao = new ProductDao(emProvider);
+			ProductDao productDao = new ProductDao(em());
 			productDao.persistAutoCommit(p);
 			Product p2 = productDao.getByField("name", p.getName());
 			LOGGER.info("Asserting that the inserted product and retrived have the same hashcode");
@@ -96,7 +99,7 @@ public class ProductDaoTest{
 		try {
 			LOGGER.info("Testing UPDATE operations");
 			
-			ProductDao productDao = new ProductDao(emProvider);
+			ProductDao productDao = new ProductDao(em());
 			Product p = productDao.getByField("name", "Call Of Duty WWII");
 			assertNotNull(p);
 			
@@ -122,13 +125,13 @@ public class ProductDaoTest{
     @DataSet("products.yml") 
     public void deleteTest() {
 		try {
-			List<Product> pList = new ProductDao(emProvider).findAll();
+			List<Product> pList = new ProductDao(em()).getAll();
 			assertNotNull(pList);
 			int productListInitialSize = pList.size();
 			
 			LOGGER.info("Testing UPDATE operations");
 			
-			ProductDao productDao = new ProductDao(emProvider);
+			ProductDao productDao = new ProductDao(em());
 			Product p = productDao.getByField("name", "Call Of Duty WWII");
 			assertNotNull(p);
 			
@@ -140,7 +143,7 @@ public class ProductDaoTest{
 			assertNull(p2);
 	
 			LOGGER.info("Asserting that the size of the list of product has decreased");
-			List<Product> pList2 = new ProductDao(emProvider).findAll();
+			List<Product> pList2 = new ProductDao(em()).getAll();
 			int finalSize = pList2.size();
 			assertNotNull(pList2);
 			assertEquals(productListInitialSize-1, finalSize);
