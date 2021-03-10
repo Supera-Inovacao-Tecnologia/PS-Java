@@ -2,10 +2,15 @@ package br.com.supera.game.store;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
 import br.com.supera.game.db.AbstractEntity;
 
+@Entity
 public class Cart extends AbstractEntity{
 	
+	@OneToMany
 	private List<Product> productList;
 	
 	//CONSTRUCTORS
