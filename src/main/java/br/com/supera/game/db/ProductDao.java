@@ -1,4 +1,4 @@
-package br.com.supera.game.store;
+package br.com.supera.game.db;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import javax.persistence.NoResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.dbunit.rules.util.EntityManagerProvider;
+import br.com.supera.game.store.Product;
 
 //import com.fasterxml.jackson.core.JsonProcessingException;
 //import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,17 +22,15 @@ public class ProductDao {
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	
 	/*mechanism to feed the dao with the EntityManger from the DBUnit Rules*/
-	private final EntityManagerProvider emp;
+	private EntityManager entityManager;
 	
-	public ProductDao(EntityManagerProvider emp) {
-		this.emp = emp;
+	public ProductDao(EntityManager em) {
+		this.entityManager = em;
 	}
 
 	public synchronized Product getById(final int id) {
 		
 		LOGGER.debug("Finding product with id equals to {}", id);
-		//Renewing EntityManager to perform a unit of work
-		EntityManager entityManager = getNewEntityManagerProviderInstance();
 		
 		Product p = null;
 		try {	
@@ -48,7 +46,7 @@ public class ProductDao {
 		}finally {
 			
 //			entityManager.close();	
-			
+//			LOGGER.debug("Entity closed");
 		}
 		
 		return p;
@@ -58,9 +56,7 @@ public class ProductDao {
 	public synchronized Product getByField(String fieldName, String fieldValue) {		
 		
 		LOGGER.debug("Finding product by field {} equals to {}", fieldName, fieldValue);
-		
-		//Renewing EntityManager to perform a unit of work
-		EntityManager entityManager = getNewEntityManagerProviderInstance(); 
+
 		try {
 			
 			Product product = entityManager
@@ -89,11 +85,9 @@ public class ProductDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Product> findAll() {
+	public List<Product> getAll() {
 		
 		LOGGER.debug("Finding all results for Product");
-		//Renewing EntityManager to perform a unit of work
-		EntityManager entityManager = getNewEntityManagerProviderInstance();
 		
 		try {
 			
@@ -121,9 +115,6 @@ public class ProductDao {
 	public synchronized void persistAutoCommit(Product product) throws RuntimeException { 
 		
 		LOGGER.debug("Persisting Product {}", product.toString());
-
-		//Renewing EntityManager to perform a unit of work
-		EntityManager entityManager = getNewEntityManagerProviderInstance();
 		
 		try {
 			
@@ -150,8 +141,6 @@ public class ProductDao {
 		
 		LOGGER.debug("Merging "+ product.toString());
 
-		//Renewing EntityManager to perform a unit of work
-		EntityManager entityManager = getNewEntityManagerProviderInstance();
 		
 		try {
 			
@@ -178,9 +167,6 @@ public class ProductDao {
 		
 		LOGGER.debug("Removing "+ product.toString());
 		
-		//Renewing EntityManager to perform a unit of work
-		EntityManager entityManager = getNewEntityManagerProviderInstance();
-		
 		try {
 			
 			entityManager.getTransaction().begin();
@@ -204,9 +190,6 @@ public class ProductDao {
 
 	public synchronized void removeById(final int id) {
 		
-		//Renewing EntityManager to perform a unit of work
-		EntityManager entityManager = getNewEntityManagerProviderInstance();
-		
 		Product product = getById(id);
 		
 		try {
@@ -229,10 +212,4 @@ public class ProductDao {
 //			LOGGER.debug("Entity closed");
 		}
 	}
-	
-	private EntityManager getNewEntityManagerProviderInstance() {
-		//Renewing EntityManager to perform a unit of work
-		return emp.instance("productDS").em();
-	}
-
 }
