@@ -11,7 +11,7 @@ import br.com.supera.game.db.AbstractEntity;
 public class Product extends AbstractEntity {
 
 	private String name;
-
+	
 	private BigDecimal price;
 
 	private short score;
