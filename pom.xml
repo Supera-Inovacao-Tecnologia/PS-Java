@@ -17,7 +17,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<jersey.version>2.32</jersey.version><!-- In order to work with Tomcat available libraries -->
+		<jersey.version>2.32</jersey.version><!-- In order to work with Tomcat 
+			available libraries -->
 	</properties>
 
 
@@ -50,7 +51,7 @@
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>2.3.4</version>
-			<scope>test</scope>
+			<!-- <scope>test</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>org.dbunit</groupId>
@@ -80,13 +81,13 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>4.2.20.Final</version>
-			<scope>provided</scope>
+			<!-- <scope>provided</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.2.20.Final</version>
-			<scope>test</scope>
+			<!-- <scope>test</scope> -->
 		</dependency>
 		<!-- JERSEY -->
 		<dependency>
@@ -103,12 +104,23 @@
 			<artifactId>jersey-hk2</artifactId>
 			<version>2.26-b04</version>
 		</dependency>
-		<!-- JAVA EE - Because Jersey is built on top of Servlet API-->
+		<!-- JERSEY JACKSON FOR POJO MARSHALING -->
 		<dependency>
-		    <groupId>javax</groupId>
-		    <artifactId>javaee-api</artifactId>
-		    <version>8.0</version>
-		    <scope>provided</scope>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+		</dependency>
+		<!-- JAVA EE - Because Jersey is built on top of Servlet API -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>8.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- Snake Yaml for production test -->
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>1.25</version>
 		</dependency>
 	</dependencies>
 
