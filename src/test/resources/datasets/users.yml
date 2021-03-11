@@ -1,0 +1,5 @@
+user:
+  - id: 12345
+    name: "fakeName"
+    lastName: "fakeLastName"
+    email: "fakeEmail"

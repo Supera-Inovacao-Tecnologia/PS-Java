@@ -3,7 +3,11 @@
     <persistence-unit name="productDS" transaction-type="RESOURCE_LOCAL">
 
             <provider>org.hibernate.ejb.HibernatePersistence</provider>
+            
             <class>br.com.supera.game.store.Product</class>
+            <class>br.com.supera.game.store.Cart</class>
+            <class>br.com.supera.game.store.Checkout</class>
+            <class>br.com.supera.game.model.User</class>
 
             <properties>
                 <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
