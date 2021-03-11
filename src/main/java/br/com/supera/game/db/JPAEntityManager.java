@@ -23,10 +23,10 @@ public final class JPAEntityManager {
 		}
 		return jpaEMInstance;
 	}
+
 	private JPAEntityManager() {
 		LOGGER = LoggerFactory.getLogger(this.getClass());
 	}
-	
 
 	public synchronized final EntityManager getEntityManager() {
 		LOGGER.debug("Creating new EntityManager");

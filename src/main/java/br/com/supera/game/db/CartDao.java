@@ -8,38 +8,38 @@ import javax.persistence.NoResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.supera.game.store.Product;
+import br.com.supera.game.store.Cart;
 
 //import com.fasterxml.jackson.core.JsonProcessingException;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 /**
- * Class that will perform database operations for the User object This class is
+ * Class that will perform database operations for the Cart object This class is
  * a DAO Pattern implementation This class perform database operations through
  * JPA This class follows the Singleton Pattern
  */
-public class ProductDao {
+public class CartDao {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
 	/* mechanism to feed the dao with the EntityManger from the DBUnit Rules */
 	private EntityManager entityManager;
 
-	public ProductDao(EntityManager em) {
+	public CartDao(EntityManager em) {
 		this.entityManager = em;
 	}
 
-	public synchronized Product getById(final int id) {
+	public synchronized Cart getById(final int id) {
 
-		LOGGER.debug("Finding product with id equals to {}", id);
+		LOGGER.debug("Finding Cart with id equals to {}", id);
 
-		Product p = null;
+		Cart p = null;
 		try {
 
-			p = entityManager.find(Product.class, id);
+			p = entityManager.find(Cart.class, id);
 
 		} catch (Exception e) {
 
-			LOGGER.debug("There was an error fetching the results of product by field id {} ", id);
+			LOGGER.debug("There was an error fetching the results of Cart by field id {} ", id);
 			e.printStackTrace();
 			throw e;
 
@@ -52,26 +52,27 @@ public class ProductDao {
 		return p;
 	}
 
-	public synchronized Product getByField(String fieldName, String fieldValue) {
+	public synchronized Cart getByField(String fieldName, String fieldValue) {
 
-		LOGGER.debug("Finding product by field {} equals to {}", fieldName, fieldValue);
+		LOGGER.debug("Finding Cart by field {} equals to {}", fieldName, fieldValue);
 
 		try {
 
-			Product product = entityManager.createQuery(
-					"select user from Product as user where user." + fieldName + " = \'" + fieldValue + "\'",
-					Product.class).getSingleResult();
-			return product;
+			Cart Cart = entityManager
+					.createQuery("select cart from Cart as cart where cart." + fieldName + " = \'" + fieldValue + "\'",
+							Cart.class)
+					.getSingleResult();
+			return Cart;
 
 		} catch (NoResultException nre) {
 
-			LOGGER.debug("Couldn't find any product by field {} equals to {}", fieldName, fieldValue);
+			LOGGER.debug("Couldn't find any Cart by field {} equals to {}", fieldName, fieldValue);
 			// it is good to use Optional API
 			return null;
 
 		} catch (Exception ex) {
 
-			LOGGER.debug("There was an error fetching the results of product by field {} equals to {}", fieldName,
+			LOGGER.debug("There was an error fetching the results of Cart by field {} equals to {}", fieldName,
 					fieldValue);
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
@@ -85,17 +86,17 @@ public class ProductDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Product> getAll() {
+	public List<Cart> getAll() {
 
-		LOGGER.debug("Finding all results for Product");
+		LOGGER.debug("Finding all results for Cart");
 
 		try {
 
-			return entityManager.createQuery("select p from Product p").getResultList();
+			return entityManager.createQuery("select p from Cart p").getResultList();
 
 		} catch (NoResultException nre) {
 
-			LOGGER.debug("Couldn't find any product");
+			LOGGER.debug("Couldn't find any Cart");
 			// it is good to use Optional API
 			return null;
 
@@ -111,21 +112,21 @@ public class ProductDao {
 		}
 	}
 
-	public synchronized void persistAutoCommit(Product product) throws RuntimeException {
+	public synchronized void persistAutoCommit(Cart Cart) throws RuntimeException {
 
-		LOGGER.debug("Persisting Product {}", product.toString());
+		LOGGER.debug("Persisting Cart {}", Cart.toString());
 
 		try {
 
 			entityManager.getTransaction().begin();
-			entityManager.persist(product);
+			entityManager.persist(Cart);
 			entityManager.getTransaction().commit();
 
 		} catch (Exception ex) {
 
-			LOGGER.debug("There was an error persiting {}", product.toString());
-			entityManager.getTransaction().rollback();
+			LOGGER.debug("There was an error persiting {}", Cart.toString());
 			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
 			throw ex;
 
 		} finally {
@@ -135,21 +136,21 @@ public class ProductDao {
 		}
 	}
 
-	public synchronized void mergeAutoCommit(Product product) {
+	public synchronized void mergeAutoCommit(Cart Cart) {
 
-		LOGGER.debug("Merging " + product.toString());
+		LOGGER.debug("Merging " + Cart.toString());
 
 		try {
 
 			entityManager.getTransaction().begin();
-			entityManager.merge(product);
+			entityManager.merge(Cart);
 			entityManager.getTransaction().commit();
 
 		} catch (Exception ex) {
 
-			LOGGER.debug("There was an error merging {}", product.toString());
-			entityManager.getTransaction().rollback();
+			LOGGER.debug("There was an error merging {}", Cart.toString());
 			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
 			throw ex;
 
 		} finally {
@@ -159,19 +160,19 @@ public class ProductDao {
 		}
 	}
 
-	public synchronized void remove(Product product) {
+	public synchronized void remove(Cart Cart) {
 
-		LOGGER.debug("Removing " + product.toString());
+		LOGGER.debug("Removing " + Cart.toString());
 
 		try {
 
 			entityManager.getTransaction().begin();
-			entityManager.remove(product);
+			entityManager.remove(Cart);
 			entityManager.getTransaction().commit();
 
 		} catch (Exception ex) {
 
-			LOGGER.debug("There was an error removing {}", product.toString());
+			LOGGER.debug("There was an error removing {}", Cart.toString());
 			entityManager.getTransaction().rollback();
 			ex.printStackTrace();
 			throw ex;
@@ -185,17 +186,17 @@ public class ProductDao {
 
 	public synchronized void removeById(final int id) {
 
-		Product product = getById(id);
+		Cart Cart = getById(id);
 
 		try {
 
 			entityManager.getTransaction().begin();
-			entityManager.remove(product);
+			entityManager.remove(Cart);
 			entityManager.getTransaction().commit();
 
 		} catch (Exception ex) {
 
-			LOGGER.debug("There was an error removing {}", product.toString());
+			LOGGER.debug("There was an error removing {}", Cart.toString());
 			entityManager.getTransaction().rollback();
 			ex.printStackTrace();
 			throw ex;
