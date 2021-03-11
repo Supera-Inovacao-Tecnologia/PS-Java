@@ -1,6 +1,7 @@
 package br.com.supera.game.model;
 
 import javax.annotation.Generated;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -16,7 +17,7 @@ public class User extends AbstractEntity {
 
 	private String email;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Cart cart;
 
 	/**
@@ -62,6 +63,8 @@ public class User extends AbstractEntity {
 
 	public User() {
 		super();
+		//initialization
+		this.cart = new Cart();
 	}
 	
 	@Generated("SparkTools")
