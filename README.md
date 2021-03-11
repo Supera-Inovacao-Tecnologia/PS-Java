@@ -22,8 +22,7 @@
 	Após rodar o comando `mvnw clean package`, copie o arquivo `game-store.war` da pasta "target" que será gerada para a pasta "webapps" do servidor Tomcat(foram realizados testes apenas na versão 9). Inicie o servidor e pronto, os endpoints já estarão disponíveis para requests.
 
 ## Endpoints 
-
-	  Por meio dos endpoints descritos abaixo, é possível interagir com as resouces. Não foram implementadas camadas de seguraça ou validação de dados devido ao tempo para entrega do projeto. 
+Por meio dos endpoints descritos abaixo, é possível interagir com as resouces. Não foram implementadas camadas de seguraça ou validação de dados devido ao tempo para entrega do projeto. 
 	  
 ### `http://localhost:8080/game-store/products`
 
