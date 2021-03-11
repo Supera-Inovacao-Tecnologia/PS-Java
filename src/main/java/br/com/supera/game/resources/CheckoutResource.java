@@ -76,23 +76,12 @@ public class CheckoutResource {
 
 	@PUT
 	public Response putCart(@PathParam("userId") Integer userId, Product p) {
-		return Response.status(Status.OK).entity("Cart Ok").build();
+		return Response.status(Status.METHOD_NOT_ALLOWED).entity("METHOD NOT ACEPTABLE").build();
 	}
 
 	@DELETE
-	public Response deleteCart(@PathParam("userId") Integer userId, Product p) {
-		User user = getUser(userId);
-
-		if (user == null)
-			return Response.status(Status.NOT_FOUND).build();
-
-		user.getCart().removeProduct(p);
-
-		EntityManager em = JPAEntityManager.getInstance().getEntityManager();
-
-		new UserDao(em).mergeAutoCommit(user);
-
-		return Response.status(Status.CREATED).entity(user.getCart().getResourceRepresentation()).build();
+	public Response deleteCart() {
+		return Response.status(Status.METHOD_NOT_ALLOWED).entity("METHOD NOT ACEPTABLE").build();
 	}
 
 	private User getUser(Integer userId) {
