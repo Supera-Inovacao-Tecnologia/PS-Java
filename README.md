@@ -1,11 +1,31 @@
-# Avaliação Java
-
+# Avaliação Java - Camada de serviço para pseudo loja de games
 
 ## Descrição
 
-  O teste consiste em construir a camada de serviço de um pseudo ecommerce de games mobile utilizando Java
+  Esse projeto é sobre a camada de serviço para uma pseudo loja de games.
+  Foi escrito utilizando em Java uitlizando a especificação JAX-RS do Java EE.
+  Foi utilizada a implementação de referência, o Jersey. E testado no Tomcat v9.
+
+
+## Por que REST
+
+  A preferência pela arquitetura, ou filosofia, REST se dá em razão da existência de modernos frameworks especializados na construção 
+  de aplicações frontend. Tal escolha ainda enforça o princípio de "separation of concerns". A criação de backends especializados naturalmente 
+  leva-nos a refletir mais sobre requerimentos de segurança, validação de dados, escalabilidade, etc. Além, arquiteturas REST torna um pouco mas flexível o reaproveitamento de código, endpoints. Enfim, o sistema como um todo se beneficia da separação de pricípios.
 
 ## Como executar os testes
+  
+  O projeto utiliza o Maven Wrapper, o que quer dizer que não será necessário a instalão do Maven na máquina, uma vez que a ferramenta é instalado em um diretório local ao projeto. 
+  Utilize o comando `mvnw clean test` para a execução da fase de testes. 
+  
+## Como executar os testes de produção
+
+### Endpoints  
+  
+  
+  Por meio dos endpoints descritos abaixo, é possível interagir com as resouces de um pseudo usuário 
+  
+  
   
   O projeto usa o maven warper (mvnw).
   Para executar os testes de exemplo basta o comando abaixo:
