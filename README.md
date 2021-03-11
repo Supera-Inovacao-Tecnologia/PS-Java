@@ -24,36 +24,38 @@
 ## Endpoints 
 Por meio dos endpoints descritos abaixo, é possível interagir com as resouces. Não foram implementadas camadas de seguraça ou validação de dados devido ao tempo para entrega do projeto. 
 	  
-### `http://localhost:8080/game-store/products`
+### http://localhost:8080/game-store/products
 
-	| Métodos       | Descrição     |
-	|:-------------:|:-------------| 
-	| GET           | retorna uma lista de produtos que podem ser inseridos no carrinho do usuário | 
+| Métodos       | Descrição     
+|:-------------:|:-------------
+| GET           | retorna uma lista de produtos que podem ser inseridos no carrinho do usuário 
+	
 Para ordenação dos itens, pode ser utilizado o parâmetro `orderBy` com os possíveis valores: [name | price | score | id] 
 	
-### `http://localhost:8080/game-store/users/1`  
+### http://localhost:8080/game-store/users/1 
 	
 Dentro de /users, será possível interagir com as resources de um pseudo usuário de id 1. Não é possível criar mais usuários.  
 	
-	| Métodos       | Descrição     |
-	|:-------------:|:-------------| 
-	| GET           | retorna o usuário | 
+| Métodos       | Descrição     
+|:-------------:|:------------- 
+| GET           | retorna o usuário 
  
-### `http://localhost:8080/game-store/users/1/cart` 
- 
-	| Métodos       | Descrição     |
-	|:-------------:|:-------------| 
-	| GET           | retorna o carrinho atualizado | 
-	| POST           | aceita objeto JSON no body do request e adiciona ao carrinho do usuário| 
-	| DELETE           | aceita objeto JSON no body do request e remove ao carrinho do usuário| 
+### http://localhost:8080/game-store/users/1/cart
+  
+| Métodos       | Descrição     
+|:-------------:|:-------------
+| GET           | retorna o carrinho atualizado
+| POST          | aceita objeto JSON no body do request e adiciona ao carrinho do usuário
+| DELETE        | aceita objeto JSON no body do request e remove ao carrinho do usuário
+	
+	
+### http://localhost:8080/game-store/users/1/cart/checkout
 
-### `http://localhost:8080/game-store/users/1/cart/checkout` 
-
-	| Métodos       | Descrição     |
-	|:-------------:|:-------------| 
-	| GET           | retorna o checkout atualizado com os produtos adicionados ao carrinho com seus preços para finalizar a compra | 
-	| POST           | aceita objeto JSON no body do request e adiciona ao carrinho do usuário| 
-	| DELETE           | aceita objeto JSON no body do request e remove ao carrinho do usuário| 
+| Métodos       | Descrição     
+|:-------------:|:-------------
+| GET           | retorna o checkout atualizado com os produtos adicionados ao carrinho com seus preços para finalizar a compra 
+| POST          | aceita objeto JSON no body do request e adiciona ao carrinho do usuário
+| DELETE        | aceita objeto JSON no body do request e remove ao carrinho do usuário
 	
 Para ordenação dos itens, pode ser utilizado o parâmetro `orderBy` com os possíveis valores: [name, price, score, id] 
 
