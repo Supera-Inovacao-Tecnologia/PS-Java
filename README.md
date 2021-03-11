@@ -29,12 +29,11 @@ Por meio dos endpoints descritos abaixo, é possível interagir com as resouces.
 	| Métodos       | Descrição     |
 	|:-------------:|:-------------| 
 	| GET           | retorna uma lista de produtos que podem ser inseridos no carrinho do usuário | 
-
-	Para ordenação dos itens, pode ser utilizado o parâmetro `orderBy` com os possíveis valores: [name | price | score | id] 
+Para ordenação dos itens, pode ser utilizado o parâmetro `orderBy` com os possíveis valores: [name | price | score | id] 
 	
 ### `http://localhost:8080/game-store/users/1`  
 	
-	 Dentro de /users, será possível interagir com as resources de um pseudo usuário de id 1. Não é possível criar mais usuários.  
+Dentro de /users, será possível interagir com as resources de um pseudo usuário de id 1. Não é possível criar mais usuários.  
 	
 	| Métodos       | Descrição     |
 	|:-------------:|:-------------| 
@@ -56,11 +55,10 @@ Por meio dos endpoints descritos abaixo, é possível interagir com as resouces.
 	| POST           | aceita objeto JSON no body do request e adiciona ao carrinho do usuário| 
 	| DELETE           | aceita objeto JSON no body do request e remove ao carrinho do usuário| 
 	
-	Para ordenação dos itens, pode ser utilizado o parâmetro `orderBy` com os possíveis valores: [name, price, score, id] 
+Para ordenação dos itens, pode ser utilizado o parâmetro `orderBy` com os possíveis valores: [name, price, score, id] 
 
 ## Requisitos
-	Java 8 instalado na máquina 
+Java 8 instalado na máquina 
 	
 ## Sobre a entrega
-	
-	Como todo cógido, o projeto pode ser melhorado para atender requisitos adicionais como mais enpoints, segurança, escalabilidade. Algumas partes do código não estão bem comentadas, novamente, devido ao prazo de entrega.
+Como todo cógido, o projeto pode ser melhorado para atender requisitos adicionais como mais enpoints, segurança, escalabilidade. Algumas partes do código não estão bem comentadas, novamente, devido ao prazo de entrega.
