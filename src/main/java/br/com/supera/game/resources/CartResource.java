@@ -17,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.com.supera.game.db.JPAEntityManager;
-import br.com.supera.game.db.ProductDao;
 import br.com.supera.game.db.UserDao;
 import br.com.supera.game.model.User;
 import br.com.supera.game.store.Product;
@@ -62,7 +61,11 @@ public class CartResource {
 		
 		User user = getUser(userId);
 		
-		user.getCart().getProductList().add(p);
+		if(user == null) return Response
+				.status(Status.NOT_FOUND)
+				.build();
+		
+		user.getCart().addProduct(p);
 		
 		EntityManager em = JPAEntityManager.getInstance().getEntityManager();
 		
@@ -70,7 +73,7 @@ public class CartResource {
 		
 		return Response
 				.status(Status.CREATED)
-				.entity(user.getCart())
+				.entity(user.getCart().getResourceRepresentation())
 				.build();
 	}
 	
@@ -83,10 +86,22 @@ public class CartResource {
 	}
 	
 	@DELETE
-	public Response deleteCart() {
+	public Response deleteCart(@PathParam("userId") Integer userId, Product p) {
+		User user = getUser(userId);
+		
+		if(user == null) return Response
+				.status(Status.NOT_FOUND)
+				.build();
+		
+		user.getCart().removeProduct(p);
+		
+		EntityManager em = JPAEntityManager.getInstance().getEntityManager();
+		
+		new UserDao(em).mergeAutoCommit(user);
+		
 		return Response
-				.status(Status.OK)
-				.entity("Cart Ok")
+				.status(Status.CREATED)
+				.entity(user.getCart().getResourceRepresentation())
 				.build();
 	}
 	
