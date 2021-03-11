@@ -10,13 +10,13 @@ import br.com.supera.game.store.Cart;
 
 @Entity
 public class User extends AbstractEntity {
-	
+
 	private String name;
-	
+
 	private String lastName;
 
 	private String email;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	private Cart cart;
 
@@ -51,9 +51,10 @@ public class User extends AbstractEntity {
 			return this;
 		}
 	}
-	
+
 	/**
 	 * Creates builder to build {@link User}.
+	 * 
 	 * @return created builder
 	 */
 	@Generated("SparkTools")
@@ -63,10 +64,10 @@ public class User extends AbstractEntity {
 
 	public User() {
 		super();
-		//initialization
+		// initialization
 		this.cart = new Cart();
 	}
-	
+
 	@Generated("SparkTools")
 	private User(Builder builder) {
 		this.name = builder.name;
@@ -74,45 +75,36 @@ public class User extends AbstractEntity {
 		this.email = builder.email;
 	}
 
-
 	public Cart getCart() {
 		return cart;
 	}
-
 
 	public String getEmail() {
 		return email;
 	}
 
-
 	public String getLastName() {
 		return lastName;
 	}
-
 
 	public String getName() {
 		return name;
 	}
 
-
 	public void setCart(Cart cart) {
 		this.cart = cart;
 	}
-
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
-
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
 }
