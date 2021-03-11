@@ -16,6 +16,8 @@ import org.yaml.snakeyaml.constructor.Constructor;
 
 import br.com.supera.game.db.JPAEntityManager;
 import br.com.supera.game.db.ProductDao;
+import br.com.supera.game.db.UserDao;
+import br.com.supera.game.model.User;
 import br.com.supera.game.store.Product;
 
 @WebListener
@@ -24,6 +26,7 @@ public class DatabaseInitializationServletContextListenerImpl implements Servlet
 	private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	
 	private final String PRODUCT_FILE_LOCATION = "datasets/product-splited-in-docs.yml";
+	private final String USER_FILE_LOCATION = "datasets/users.yml";
 	
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
@@ -38,6 +41,8 @@ public class DatabaseInitializationServletContextListenerImpl implements Servlet
 		
 		EntityManager em = JPAEntityManager.getInstance().getEntityManager();
 		
+		//INSERTING PRODUCTS
+		
 		ProductDao productDao = new ProductDao(em);
 		
 		List<Product> productList = getProductsFromYaml();
@@ -47,9 +52,15 @@ public class DatabaseInitializationServletContextListenerImpl implements Servlet
 			productDao.persistAutoCommit(p);
 		});
 		
+		//INSERTING UNIQUE USER
+		
+		UserDao userDao = new UserDao(em);
+		userDao.persistAutoCommit(getUnique());
+		
+		
 	}
 	
-	public List<Product> getProductsFromYaml(){
+	private List<Product> getProductsFromYaml(){
 		LOGGER.debug("Loading Products objects from {}", PRODUCT_FILE_LOCATION);
 		
 		Yaml yaml = new Yaml(new Constructor(Product.class));
@@ -67,6 +78,19 @@ public class DatabaseInitializationServletContextListenerImpl implements Servlet
 		});
 		
 		return productList;
+	}
+	
+	private User getUnique(){
+		LOGGER.debug("Loading unic User objects from {} for test purposes", PRODUCT_FILE_LOCATION);
+		
+		Yaml yaml = new Yaml(new Constructor(User.class));
+		InputStream inputStream = this.getClass()
+		  .getClassLoader()
+		  .getResourceAsStream(USER_FILE_LOCATION);
+		
+		User user = yaml.load(inputStream);
+		
+		return user;
 	}
 
 }
