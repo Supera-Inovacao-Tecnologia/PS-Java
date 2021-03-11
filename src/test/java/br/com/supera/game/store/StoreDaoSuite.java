@@ -11,8 +11,9 @@ import br.com.supera.game.service.ProductServiceTest;
 @SuiteClasses({
 	ProductDaoTest.class,
 	ProductServiceTest.class,
-	UserDaoTest.class
+	UserDaoTest.class,
+	CartDaoTest.class
 	})
-public class ProductDaoSuite {
+public class StoreDaoSuite {
 
 }
