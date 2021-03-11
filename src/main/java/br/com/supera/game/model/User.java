@@ -2,6 +2,7 @@ package br.com.supera.game.model;
 
 import javax.annotation.Generated;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 import br.com.supera.game.db.AbstractEntity;
 import br.com.supera.game.store.Cart;
@@ -14,7 +15,8 @@ public class User extends AbstractEntity {
 	private String lastName;
 
 	private String email;
-
+	
+	@OneToOne
 	private Cart cart;
 
 	/**
