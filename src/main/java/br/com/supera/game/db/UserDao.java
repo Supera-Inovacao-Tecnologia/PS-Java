@@ -125,8 +125,8 @@ public class UserDao {
 		} catch (Exception ex) {
 			
 			LOGGER.debug("There was an error persiting {}", User.toString());
-			entityManager.getTransaction().rollback();
 			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
 			throw ex;
 			
 		}
@@ -151,8 +151,8 @@ public class UserDao {
 		} catch (Exception ex) {
 			
 			LOGGER.debug("There was an error merging {}", User.toString());
-			entityManager.getTransaction().rollback();
 			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
 			throw ex;
 			
 		}
