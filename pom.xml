@@ -124,4 +124,8 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<finalName>game-store</finalName>
+	</build>
+
 </project>
