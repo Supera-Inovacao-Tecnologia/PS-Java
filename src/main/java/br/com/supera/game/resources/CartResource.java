@@ -24,93 +24,78 @@ import br.com.supera.game.store.Product;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CartResource {
-	
+
 	private Logger LOGGER;
-	
+
 	public CartResource() {
 		LOGGER = LoggerFactory.getLogger(this.getClass());
 	}
-	
-	@Path("checkout")
-	public CheckoutResource getCheckout() throws RuntimeException {
-		LOGGER.debug("Subresource locator to CheckoutResource");
-		return new CheckoutResource();
-	}
-	
+
 	@GET
 	public Response getCart(@PathParam("userId") Integer userId) {
-		
+
 		LOGGER.debug("Getting cart for user with id {} ", userId);
-		
+
 		EntityManager em = JPAEntityManager.getInstance().getEntityManager();
-		
+
 		User user = getUser(userId);
-		
-		if(user == null) return Response
-					.status(Status.NOT_FOUND)
-					.build();
-		
-		return Response
-				.status(Status.OK)
-				.entity(user.getCart())
-				.build();
+
+		if (user == null)
+			return Response.status(Status.NOT_FOUND).build();
+
+		return Response.status(Status.OK).entity(user.getCart()).build();
 	}
-	
+
 	@POST
 	public Response postCart(@PathParam("userId") Integer userId, Product p) {
-		
+
 		User user = getUser(userId);
-		
-		if(user == null) return Response
-				.status(Status.NOT_FOUND)
-				.build();
-		
+
+		if (user == null)
+			return Response.status(Status.NOT_FOUND).build();
+
 		user.getCart().addProduct(p);
-		
+
 		EntityManager em = JPAEntityManager.getInstance().getEntityManager();
-		
+
 		new UserDao(em).mergeAutoCommit(user);
-		
-		return Response
-				.status(Status.CREATED)
-				.entity(user.getCart().getResourceRepresentation())
-				.build();
+
+		return Response.status(Status.CREATED).entity(user.getCart().getResourceRepresentation()).build();
 	}
-	
+
 	@PUT
 	public Response putCart(@PathParam("userId") Integer userId, Product p) {
-		return Response
-				.status(Status.OK)
-				.entity("Cart Ok")
-				.build();
+		return Response.status(Status.OK).entity("Cart Ok").build();
 	}
-	
+
 	@DELETE
 	public Response deleteCart(@PathParam("userId") Integer userId, Product p) {
 		User user = getUser(userId);
-		
-		if(user == null) return Response
-				.status(Status.NOT_FOUND)
-				.build();
-		
+
+		if (user == null)
+			return Response.status(Status.NOT_FOUND).build();
+
 		user.getCart().removeProduct(p);
-		
+
 		EntityManager em = JPAEntityManager.getInstance().getEntityManager();
-		
+
 		new UserDao(em).mergeAutoCommit(user);
-		
-		return Response
-				.status(Status.CREATED)
-				.entity(user.getCart().getResourceRepresentation())
-				.build();
+
+		return Response.status(Status.CREATED).entity(user.getCart().getResourceRepresentation()).build();
 	}
-	
+
 	private User getUser(Integer userId) {
-		
+
 		EntityManager em = JPAEntityManager.getInstance().getEntityManager();
-		
+
 		return new UserDao(em).getByField("id", String.valueOf(userId));
-		
-		
+
+	}
+
+	// SUBRESOURCE LOCATOR
+	@Path("checkout")
+	public CheckoutResource getCheckoutResource() throws RuntimeException {
+		LOGGER.debug("Subresource locator to CheckoutResource");
+		return new CheckoutResource();
 	}
 }

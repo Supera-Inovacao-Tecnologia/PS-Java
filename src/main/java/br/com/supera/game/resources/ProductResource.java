@@ -21,24 +21,26 @@ import br.com.supera.game.store.Product;
 public class ProductResource {
 
 	private final Logger LOGGER;
-	
+
 	public ProductResource() {
 		this.LOGGER = LoggerFactory.getLogger(this.getClass());
 	}
-	
+
 	@GET
 	public Response getProducts(@BeanParam ProductResourceBeanParam paginationBeanParam) {
-		
-		//Could be written using refletion
+
+		// Could be written using refletion
 		LOGGER.debug("Start getProducts method from ProductResource");
-		
+
 		ProductService ps = new ProductService();
-		
+
 		List<Product> pListOrderedAndPaginated = ps.getAllProductsOrderedAndPaginated(paginationBeanParam);
-		
-		//GenericEntity maintain the size of collections in order to Jackson be able to serialize it
-		GenericEntity<List<Product>> ge = new GenericEntity<List<Product>>(pListOrderedAndPaginated){};
-		
+
+		// GenericEntity maintain the size of collections in order to Jackson be able to
+		// serialize it
+		GenericEntity<List<Product>> ge = new GenericEntity<List<Product>>(pListOrderedAndPaginated) {
+		};
+
 		return Response.ok().entity(ge).build();
 	}
 }

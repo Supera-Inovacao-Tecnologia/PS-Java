@@ -21,37 +21,33 @@ import br.com.supera.game.model.User;
 @Produces(MediaType.APPLICATION_JSON)
 @Path("users/{userId}")
 public class UserResource {
-	
+
 	private Logger LOGGER;
-	
+
 	public UserResource() {
 		LOGGER = LoggerFactory.getLogger(this.getClass());
 	}
-	
+
 	@GET
 	public Response getUser(@PathParam("userId") Integer userId) {
-		
-		//Fake registered user
+
+		// Fake registered user
 		EntityManager em = JPAEntityManager.getInstance().getEntityManager();
 		User u = new UserDao(em).getByField("id", String.valueOf(userId));
-		
-		//It would be more scalable using ExceptionMapper feature
-		if(u == null) return Response
-				.status(Status.NOT_FOUND)
-				.build();
-		
-		return Response
-				.status(Status.OK)
-				.entity(u)
-				.build();
+
+		// It would be more scalable using ExceptionMapper feature
+		if (u == null)
+			return Response.status(Status.NOT_FOUND).build();
+
+		return Response.status(Status.OK).entity(u).build();
 	}
-	
-	//SUBRESOURCE LOCATORS
-	
+
+	// SUBRESOURCE LOCATORS
+
 	@Path("cart")
 	public CartResource getCart() throws RuntimeException {
 		LOGGER.debug("Subresource locator to CartResource");
 		return new CartResource();
 	}
-	
+
 }

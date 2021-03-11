@@ -11,14 +11,14 @@ import br.com.supera.game.db.AbstractEntity;
 public class Product extends AbstractEntity {
 
 	private String name;
-	
+
 	private BigDecimal price;
 
 	private short score;
 
 	private String image;
 
-	//GETTERS/SETTERS
+	// GETTERS/SETTERS
 	public String getName() {
 		return name;
 	}
@@ -63,8 +63,10 @@ public class Product extends AbstractEntity {
 		this.score = builder.score;
 		this.image = builder.image;
 	}
+
 	/**
 	 * Creates builder to build {@link Product}.
+	 * 
 	 * @return created builder
 	 */
 	@Generated("SparkTools")
@@ -113,5 +115,5 @@ public class Product extends AbstractEntity {
 	public Product() {
 		super();
 	}
-	
+
 }

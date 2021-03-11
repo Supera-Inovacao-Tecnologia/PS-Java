@@ -1,9 +1,10 @@
 package br.com.supera.game.resources;
 
 import javax.ws.rs.DefaultValue;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 
-public class ProductResourceBeanParam {
+public class CheckoutResourceBeanParam {
 
 	@DefaultValue("1")
 	@QueryParam("pageNumber")
@@ -12,6 +13,9 @@ public class ProductResourceBeanParam {
 	@DefaultValue("name")
 	@QueryParam("orderBy")
 	private String orderByQueryParam;
+
+	@PathParam("userId")
+	private Integer userIdQueryParam;
 
 	public String getPageNumberQueryParam() {
 		return pageNumberQueryParam;
@@ -27,6 +31,14 @@ public class ProductResourceBeanParam {
 
 	public void setOrderByQueryParam(String orderByQueryParam) {
 		this.orderByQueryParam = orderByQueryParam;
+	}
+
+	public Integer getUserIdQueryParam() {
+		return userIdQueryParam;
+	}
+
+	public void setUserIdQueryParam(Integer userIdQueryParam) {
+		this.userIdQueryParam = userIdQueryParam;
 	}
 
 }
