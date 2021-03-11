@@ -21,75 +21,70 @@ import br.com.supera.game.model.User;
 import br.com.supera.game.store.Product;
 
 @WebListener
-public class DatabaseInitializationServletContextListenerImpl implements ServletContextListener{
-	
+public class DatabaseInitializationServletContextListenerImpl implements ServletContextListener {
+
 	private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-	
+
 	private final String PRODUCT_FILE_LOCATION = "datasets/product-splited-in-docs.yml";
 	private final String USER_FILE_LOCATION = "datasets/users.yml";
-	
+
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		LOGGER.info("Trigering ServletContextListener for database initization");
-		
+
 		initializeDatabaseForProductionTest();
-		
+
 	}
-	
+
 	private void initializeDatabaseForProductionTest() {
 		LOGGER.debug("Initializing database with Products");
-		
+
 		EntityManager em = JPAEntityManager.getInstance().getEntityManager();
-		
-		//INSERTING PRODUCTS
-		
+
+		// INSERTING PRODUCTS
+
 		ProductDao productDao = new ProductDao(em);
-		
+
 		List<Product> productList = getProductsFromYaml();
-		
+
 		productList.stream().forEach((p) -> {
 			LOGGER.debug("Inserting {} to database", p.toString());
 			productDao.persistAutoCommit(p);
 		});
-		
-		//INSERTING UNIQUE USER
-		
+
+		// INSERTING UNIQUE USER
+
 		UserDao userDao = new UserDao(em);
 		userDao.persistAutoCommit(getUnique());
-		
-		
+
 	}
-	
-	private List<Product> getProductsFromYaml(){
+
+	private List<Product> getProductsFromYaml() {
 		LOGGER.debug("Loading Products objects from {}", PRODUCT_FILE_LOCATION);
-		
+
 		Yaml yaml = new Yaml(new Constructor(Product.class));
-		InputStream inputStream = this.getClass()
-		  .getClassLoader()
-		  .getResourceAsStream(PRODUCT_FILE_LOCATION);
-		
+		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(PRODUCT_FILE_LOCATION);
+
 		Iterable<Object> i = yaml.loadAll(inputStream);
-		
+
 		List<Product> productList = new ArrayList<Product>();
-		
+
 		i.forEach((o) -> {
-			
-			productList.add((Product) o); 
+
+			productList.add((Product) o);
 		});
-		
+
 		return productList;
 	}
-	
-	private User getUnique(){
+
+	private User getUnique() {
 		LOGGER.debug("Loading unic User objects from {} for test purposes", PRODUCT_FILE_LOCATION);
-		
+
 		Yaml yaml = new Yaml(new Constructor(User.class));
-		InputStream inputStream = this.getClass()
-		  .getClassLoader()
-		  .getResourceAsStream(USER_FILE_LOCATION);
-		
+		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(USER_FILE_LOCATION);
+
 		User user = yaml.load(inputStream);
-		
+
 		return user;
 	}
 
