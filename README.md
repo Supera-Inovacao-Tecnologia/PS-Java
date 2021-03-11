@@ -19,46 +19,49 @@
   Utilize o comando `mvnw clean test` para a execução da fase de testes. 
   
 ## Como executar os testes de produção
+	Para a execução de testes nos endpoints, poderá ser utilizada a ferramente Postman, Curl ou o próprio navegador.
+	Após rodar o comando `mvnw clean package`, copie o arquivo `game-store.war` da pasta target que será gerada para a pasta webapps do servidor Tomcat(foram realizados testes apenas na versão 9). Inicie o servidor e pronto, os endpoints já estarão disponíveis para requests.
 
-### Endpoints  
-  
-  
-  Por meio dos endpoints descritos abaixo, é possível interagir com as resouces de um pseudo usuário 
-  
-  
-  
-  O projeto usa o maven warper (mvnw).
-  Para executar os testes de exemplo basta o comando abaixo:
-  ```sh
-  ./mvnw clean test
-  ```
+### Endpoints 
+
+	  Por meio dos endpoints descritos abaixo, é possível interagir com as resouces. Não foram implementadas camadas de seguraça ou validação de dados devido ao tempo para entrega do projeto. 
+	  
+#### `http://localhost:8080/game-store/products`
+
+	| Métodos       | Descrição     |
+	|:-------------:|:-------------| 
+	| GET           | retorna uma lista de produtos que podem ser inseridos no carrinho do usuário | 
+
+	Para ordenação dos itens, pode ser utilizado o parâmetro `orderBy` com os possíveis valores: [name, price, score, id] 
+	
+#### `http://localhost:8080/game-store/users/1`  
+	
+	 Dentro de /users, será possível interagir com as resources de um pseudo usuário de id 1. Não é possível criar mais usuários.  
+	 | Métodos       | Descrição     |
+	|:-------------:|:-------------| 
+	| GET           | retorna o usuário | 
+ 
+#### `http://localhost:8080/game-store/users/1/cart` 
+ 
+	| Métodos       | Descrição     |
+	|:-------------:|:-------------| 
+	| GET           | retorna o carrinho atualizado | 
+	| POST           | aceita objeto JSON no no body do request e adiciona ao carrinho do usuário| 
+	| DELETE           | aceita objeto JSON no no body do request e remove ao carrinho do usuário| 
+
+#### `http://localhost:8080/game-store/users/1/cart/checkout` 
+
+	| Métodos       | Descrição     |
+	|:-------------:|:-------------| 
+	| GET           | retorna o checkout atualizado com os produtos adicionados ao carrinho com seus preços para finalizar a compra | 
+	| POST           | aceita objeto JSON no no body do request e adiciona ao carrinho do usuário| 
+	| DELETE           | aceita objeto JSON no no body do request e remove ao carrinho do usuário| 
+	
+	Para ordenação dos itens, pode ser utilizado o parâmetro `orderBy` com os possíveis valores: [name, price, score, id] 
 
 ## Requisitos
-
-  - Existe um exemplo de carga de banco de dados em memória em [ProductDaoExampleTest.java](./src/test/java/br/com/supera/game/store/ProductDaoExampleTest.java)
-  - Os valores exibidos no checkout (frete, subtotal e total) devem ser calculados dinamicamente
-  - O usuário poderá adicionar e remover produtos do carrinho
-  - O usuário poderá ordenar os produtos por preço, popularidade (score) e ordem alfabética.
-  - A cada produto adicionado, deve-se somar R$ 10,00 ao frete.
-  - O frete é grátis para compras acima de R$ 250,00 (sem o frete dos demais produtos).
-
-## O que iremos avaliar
-
-Levaremos em conta os seguintes critérios:
-
-  - Cumprimento dos requisitos
-  - Qualidade do projeto de API e fluidez da DX
-  - Organização do código e boas práticas
-  - Domínio das linguagens, bibliotecas e ferramentas utilizadas
-  - Organização dos commits
-  - Escrita e cobertura de testes
-
+	Java 8 instalado na máquina 
+	
 ## Sobre a entrega
-
-  - O prazo para entrega do projeto é até 11:59 do dia 09/03/2021.
-  - A API pode ser HTTP, Restful, WSDL/SOAP, HATEOAS ou gRCP mas deverá ser documentado no [README.md](.) como executar/compilar/empacotar o projeto e quais os endpoints solicitados nos requisitos acima. 
-  - A versão do Java pode ser atualizada para 11 ou 14.
-  - Não existe restrição de framework (EE, Spring, Quarkus etc) mas será melhor avaliado se justificado no [README.md](.) os motivos da decisão.
-
-
-### Assim que concluir o teste, nos encaminhe a url do repositório onde o teste foi escrito e o pacote { *.jar, *.war, *.ear ...} do projeto através [deste formulário](https://forms.gle/YHF1UtxsBmBGWnie7)
+	
+	Como todo cógido, o projeto pode ser melhorado para atender requisitos adicionais, como mais enpoints, constraint, segunrança, escalabilidade. Algumas partes do código não estão bem comentadas, novamente, devido ao prazo de entrega.
